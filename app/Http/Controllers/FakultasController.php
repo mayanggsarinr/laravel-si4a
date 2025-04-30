@@ -14,7 +14,9 @@ class FakultasController extends Controller
      */
     public function index()
     {
-        //
+        // panggil model fakultas seloquent / db query
+        $fakultas = Fakultas::all();//perintah sql select * from fakultas
+        dd($fakultas); //dump and die
     }
 
     /**
