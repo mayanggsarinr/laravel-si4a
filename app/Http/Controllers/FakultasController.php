@@ -16,7 +16,8 @@ class FakultasController extends Controller
     {
         // panggil model fakultas seloquent / db query
         $fakultas = Fakultas::all();//perintah sql select * from fakultas
-        dd($fakultas); //dump and die
+        //dd($fakultas); //dump and die
+        return view('fakultas.index', compact('fakultas'));
     }
 
     /**
