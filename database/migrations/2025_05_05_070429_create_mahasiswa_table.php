@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('mahasiswas', function (Blueprint $table) {
+        Schema::create('mahasiswa', function (Blueprint $table) {
             $table->id();
-            $table->String('npm', 11);
-            $table->String('nama', 30);
-            $table->Enum('jk', ['L', 'P']);
+            $table->string('npm', 11);
+            $table->string('nama', 30);
+            $table->enum('jk', ['L', 'P']);
             $table->date('tanggal_lahir');
-            $table->String('tempat_lahir', 30);
-            $table->String('asal_sma', 30);
-            $table->foreignId('prodi_id')->constrained('restrict')->onUpdate('restrict');
-            $table->String('foto', 50)->nullable();
+            $table->string('tempat_lahir',30);
+            $table->string('asal_sma',30);
+            $table->foreignId('prodi_id')->constrained('prodi')->onDelete('restrict')->onUpdate('restrict');
+            $table->string('foto', 50)->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mahasiswas');
+        Schema::dropIfExists('mahasiswa');
     }
 };
