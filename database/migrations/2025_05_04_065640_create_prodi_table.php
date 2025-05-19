@@ -8,17 +8,15 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('prodi', function (Blueprint $table) {
             $table->id();
-            $table->String('nama', 50);
-            $table->String('singkatan', 2);
-            $table->String('kaprodi', 30);
-            $table->String('sekretaris', 30);
+            $table->string('nama', 50);
+            $table->string('singkatan', 2);
+            $table->string('kaprodi', 30);
+            $table->string('sekretaris', 30);
             $table->foreignId('fakultas_id')->constrained('fakultas')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
         });
@@ -26,11 +24,9 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('prodis');
+        Schema::dropIfExists('prodi');
     }
 };
