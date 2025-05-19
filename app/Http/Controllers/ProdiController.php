@@ -27,7 +27,7 @@ class ProdiController extends Controller
      */
     public function create()
     {
-        //
+        return view('prodi.create');
     }
 
     /**
@@ -38,7 +38,13 @@ class ProdiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validasi inout
+        $input = $request->validate([
+            'nama' => 'required|unique:prodi',
+            'singkatan' => 'required|max:5',
+            'kaprodi' => 'required',
+            'sekretaris' => 'required',
+        ]);
     }
 
     /**
