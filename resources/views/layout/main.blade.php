@@ -310,19 +310,19 @@
                 </ul>
               </li>
               <li class="nav-item">
-                <a class='nav-link' href='{{ url('fakultas')}}'>
+                <a class='nav-link' href='{{ url('fakultas') }}'>
                   <i class="nav-icon bi bi-palette"></i>
                   <p>Fakultas</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class='nav-link' href='{{ url('prodi')}}'>
+                <a class='nav-link' href='{{ url('prodi') }}'>
                   <i class="nav-icon bi bi-palette"></i>
                   <p>Program Studi</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class='nav-link' href='{{ url('mahasiswa')}}'>
+                <a class='nav-link' href='{{ url('mahasiswa') }}'>
                   <i class="nav-icon bi bi-palette"></i>
                   <p>Mahasiswa</p>
                 </a>
@@ -735,17 +735,17 @@
         <div class="app-content-header">
           <!--begin::Container-->
           <div class="container-fluid">
-            <!--begin::Row-->
-            <div class="row">
-              <div class="col-sm-6"><h3 class="mb-0">@yield('title')</h3></div>
-              <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-end">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">@yield('title')</li>
-                </ol>
-              </div>
-            </div>
-            <!--end::Row-->
+                <!--begin::Row-->
+                <div class="row">
+                    <div class="col-sm-6"><h3 class="mb-0">@yield('title')</h3></div>
+                    <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">@yield('title')</li>
+                    </ol>
+                    </div>
+                </div>
+                <!--end::Row-->
           </div>
           <!--end::Container-->
         </div>
@@ -819,6 +819,30 @@
       });
     </script>
     <!--end::OverlayScrollbars Configure-->
+    <!-- jquery cdn-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
+    <!-- sweetalert js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        $('.show_confirm').click(function(event) {
+            var form = $(this).closest("form");
+            var nama = $(this).data("nama");
+            event.preventDefault();
+            swal({
+                    title: `Apakah Anda yakin ingin menghapus data ${nama} ini?`,
+                    text: "If you delete this, it will be gone forever.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        form.submit();
+                    }
+                });
+        });
+    </script>
     <!--end::Script-->
   </body>
   <!--end::Body-->

@@ -2,87 +2,73 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\mahasiswa;
+use App\Models\Mahasiswa;
+use App\Models\Prodi;
 use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        // panggil model Mahasiswa menggunakan eloquent
-        $mahasiswa = Mahasiswa::all(); // printah SQL select * from prodi
-        // dd($mahasiswa); // dump and die
-        return view('mahasiswa.index')->with('mahasiswa', $mahasiswa); // selain compact, bisa menggunakan with()
+        $mahasiswa = Mahasiswa::all();
+        return view('mahasiswa.index', compact('mahasiswa'));
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
-        //
+        $prodi = Prodi::all();
+        return view('mahasiswa.create', compact('prodi'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
-        //
+        // validasi input
+        $input = $request->validate([
+            'npm' => 'required|unique:mahasiswa',
+            'nama' => 'required',
+            'jk' => 'required',
+            'tanggal_lahir' => 'required',
+            'tempat_lahir' => 'required',
+            'asal_sma' => 'required',
+            'prodi_id' => 'required',
+            'foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        // upload foto
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto'); // ambil file foto
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename); // simpan foto ke folder public/images
+            $input['foto'] = $filename; // simpan nama file baru ke $input
+        }
+        // simpan data ke tabel mahasiswa
+        Mahasiswa::create($input);
+        // redirect ke route mahasiswa.index
+        return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\mahasiswa  $mahasiswa
-     * @return \Illuminate\Http\Response
-     */
-    public function show(mahasiswa $mahasiswa)
+    public function show(Mahasiswa $mahasiswa)
+    {
+        // dd($mahasiswa)
+        return view('mahasiswa.show', compact('mahasiswa'));
+    }
+
+    
+    public function edit(Mahasiswa $mahasiswa)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\mahasiswa  $mahasiswa
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(mahasiswa $mahasiswa)
+   
+    public function update(Request $request, Mahasiswa $mahasiswa)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\mahasiswa  $mahasiswa
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, mahasiswa $mahasiswa)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\mahasiswa  $mahasiswa
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(mahasiswa $mahasiswa)
+    
+    public function destroy(Mahasiswa $mahasiswa)
     {
         //
     }
